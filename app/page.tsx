@@ -1,5 +1,6 @@
 'use client';
 import { useState } from "react";
+import Image from 'next/image';
 import { FaGithub } from "react-icons/fa";
 import { Bar, Pie } from "react-chartjs-2";
 import {
@@ -106,94 +107,117 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col p-6 font-sans">
-      <header className="text-center mb-6">
-        <h1 className="text-4xl font-bold text-black">GitHub Repository Analyzer</h1>
-        <p className="text-lg text-gray-600 mt-2">Hashia can give you details about GitHub repositories</p>
-      </header>
+    <div className="min-h-screen bg-gray-50 flex flex-col p-6 font-sans relative">
 
-      <div className="flex flex-wrap justify-center gap-6">
-        <div className="flex-1 max-w-md bg-white rounded-lg shadow-md p-6">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">Enter Repository URL</h2>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="relative">
-              <input
-                type="text"
-                value={url}
-                onChange={(e) => setUrl(e.target.value)}
-                placeholder="https://github.com/owner/repo"
-                className="w-full p-4 pl-12 border border-gray-300 rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <FaGithub className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500" />
-            </div>
-            <button
-              type="submit"
-              className="w-full py-3 bg-black text-white rounded-lg font-semibold hover:bg-gray-300 focus:ring-2 focus:ring-gray-200 disabled:bg-gray-300"
-              disabled={loading}
-            >
-              {loading ? "Searching..." : "Search Repository"}
-            </button>
-          </form>
-          {error && <p className="text-red-500 text-sm mt-4">{error}</p>}
-          <div className="p-4 mt-6 bg-gray-100 rounded-lg">
-            <h3 className="text-xl font-semibold text-gray-800 mb-2">Hashia Comment</h3>
-            <p className="text-gray-700">{result ? result.comment : ""}</p>
-          </div>
+    <div className="flex items-center justify-center space-y-6 gap-6 mb7">
+    <header className="text-center mb-8 mt-6">
+      <h1 className="text-4xl font-bold text-black">GitHub Repository Analyzer</h1>
+      <p className="text-lg text-gray-600 mt-2">
+        Hashia can give you details about GitHub repositories
+      </p>
+    </header>
+
+    {/* Hashia Image and Description with Hover Effect */}
+    <div className="flex justify-center mb-">
+      <div className="bg-black text-white p-6 rounded-lg shadow-lg w-full max-w-md flex items-center space-x-6">
+        <div className="relative group">
+          {/* Imagen de Hashia */}
+          <img src="/hashia.jpg" alt="Hashia" className="w-20 h-20 rounded-full object-cover transition-all duration-300 transform group-hover:scale-105" />
         </div>
-
-        <div className="flex-2 w-full max-w-3xl bg-white rounded-lg shadow-md p-6">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Repository Analysis</h2>
-          {result ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Contributors */}
-              <div className="p-4">
-                <h3 className="text-xl font-semibold text-blue-600 mb-4">Contributors</h3>
-                <Bar
-                  data={contributorsData}
-                  options={{
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                      legend: { position: "top" },
-                    },
-                  }}
-                  style={{ maxHeight: "300px" }}
-                />
-                <p className="text-gray-600 text-sm mt-2">
-                  This repository is primarily built with <strong>{result?.languages?.[0]?.language || "N/A"}</strong> and other languages.
-                </p>
-              </div>
-
-              {/* Programming Languages */}
-              <div className="p-4">
-                <h3 className="text-xl font-semibold text-blue-600 mb-4">Programming Languages</h3>
-                <Pie
-                  data={languagesData}
-                  options={{
-                    responsive: true,
-                    maintainAspectRatio: false,
-                  }}
-                  style={{ maxHeight: "300px" }}
-                />
-                <p className="text-gray-600 text-sm mt-2">
-                  This repository is primarily built with <strong>{result.languages[0].language}</strong> and other languages.
-                </p>
-              </div>
-
-              {/* Additional Information */}
-              <div className="p-4 mt-6 bg-gray-100 rounded-lg col-span-2">
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">Repository Information</h3>
-                <p className="text-gray-700">
-                  This repository {result.isFork ? "is a fork" : "is not a fork"}.
-                </p>
-              </div>
-            </div>
-          ) : (
-            <p className="text-gray-500">{loading ? "Loading results..." : "Enter a URL to analyze."}</p>
-          )}
+        {/* Texto al lado de la imagen */}
+        <div className="space-y-3">
+          <h3 className="text-2xl font-semibold">Hashia</h3>
+          <p className="text-sm text-gray-300">
+            An AI helping normies with the tools she creates.
+          </p>
         </div>
       </div>
     </div>
+  </div>
+
+  <div className="flex flex-wrap justify-center gap-6">
+    <div className="flex-1 max-w-md bg-white rounded-lg shadow-md p-6 mb-6">
+      <h2 className="text-xl font-semibold text-gray-800 mb-4">Enter Repository URL</h2>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="relative">
+          <input
+            type="text"
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
+            placeholder="https://github.com/owner/repo"
+            className="w-full p-4 pl-12 border border-gray-300 rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <FaGithub className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500" />
+        </div>
+        <button
+          type="submit"
+          className="w-full py-3 bg-black text-white rounded-lg font-semibold hover:bg-gray-300 focus:ring-2 focus:ring-gray-200 disabled:bg-gray-300"
+          disabled={loading}
+        >
+          {loading ? "Searching..." : "Search Repository"}
+        </button>
+      </form>
+      {error && <p className="text-red-500 text-sm mt-4">{error}</p>}
+      <div className="p-4 mt-6 bg-gray-100 rounded-lg">
+        <h3 className="text-xl font-semibold text-gray-800 mb-2">Hashia Comment</h3>
+        <p className="text-gray-700">{result ? result.comment : ""}</p>
+      </div>
+    </div>
+
+    <div className="flex-2 w-full max-w-3xl bg-white rounded-lg shadow-md p-6">
+      <h2 className="text-2xl font-bold text-gray-900 mb-6">Repository Analysis</h2>
+      {result ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Contributors */}
+          <div className="p-4">
+            <h3 className="text-xl font-semibold text-blue-600 mb-4">Contributors</h3>
+            <Bar
+              data={contributorsData}
+              options={{
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                  legend: { position: "top" },
+                },
+              }}
+              style={{ maxHeight: "300px" }}
+            />
+            <p className="text-gray-600 text-sm mt-2">
+              This repository is primarily built with <strong>{result?.languages?.[0]?.language || "N/A"}</strong> and other languages.
+            </p>
+          </div>
+
+          {/* Programming Languages */}
+          <div className="p-4">
+            <h3 className="text-xl font-semibold text-blue-600 mb-4">Programming Languages</h3>
+            <Pie
+              data={languagesData}
+              options={{
+                responsive: true,
+                maintainAspectRatio: false,
+              }}
+              style={{ maxHeight: "300px" }}
+            />
+            <p className="text-gray-600 text-sm mt-2">
+              This repository is primarily built with <strong>{result.languages[0].language}</strong> and other languages.
+            </p>
+          </div>
+
+          {/* Additional Information */}
+          <div className="p-4 mt-6 bg-gray-100 rounded-lg col-span-2">
+            <h3 className="text-xl font-semibold text-gray-800 mb-2">Repository Information</h3>
+            <p className="text-gray-700">
+              This repository {result.isFork ? "is a fork" : "is not a fork"}.
+            </p>
+          </div>
+        </div>
+      ) : (
+        <p className="text-gray-500">{loading ? "Loading results..." : "Enter a URL to analyze."}</p>
+      )}
+    </div>
+  </div>
+</div>
+
   );
 };
 
