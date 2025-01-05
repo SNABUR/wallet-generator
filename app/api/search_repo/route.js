@@ -27,19 +27,22 @@ export async function POST(req, res) {
     
     // Verificar si el cliente excedió el límite
     if (rateLimit(clientId)) {
-      return res.status(429).json({ error: 'Rate limit exceeded. Only 3 requests per minute allowed.' });
+      return new Response(
+        JSON.stringify({ error: 'Rate limit exceeded. Only 3 requests per minute allowed.' }),
+        { status: 429 }
+      );
     }
 
     const { url } = await req.json();
 
     // Validar la URL
     if (!url || !url.startsWith('https://github.com/')) {
-      return res.status(400).json({ error: 'Invalid URL or not a GitHub repository' });
+      return new Response(JSON.stringify({ error: 'Invalid URL or not a GitHub repository' }), { status: 400 });
     }
 
     const repoMatch = url.match(/github\.com\/([^/]+)\/([^/]+)/);
     if (!repoMatch) {
-      return res.status(400).json({ error: 'Invalid URL format' });
+      return new Response(JSON.stringify({ error: 'Invalid URL format' }), { status: 400 });
     }
     const [_, owner, repo] = repoMatch;
 
@@ -79,12 +82,13 @@ export async function POST(req, res) {
       parsedResponse = JSON.parse(aiResponse);
     } catch (error) {
       console.error("Error parsing JSON:", error.message);
-      return res.status(500).json({ error: 'AI response was not a valid JSON', rawResponse: aiResponse });
+      return new Response(JSON.stringify({ error: 'AI response was not a valid JSON', rawResponse: aiResponse }), { status: 500 });
     }
 
-    return res.status(200).json(parsedResponse);
+    return new Response(JSON.stringify(parsedResponse), { status: 200 });
   } catch (error) {
+    res.status(500).json({ error: 'Error processing the request' });
     console.error('Error:', error.message);
-    return res.status(500).json({ error: 'Error processing the request' });
+    return new Response(JSON.stringify({ error: 'Error processing the request' }), { status: 500 });
   }
 }
