@@ -108,12 +108,12 @@ export default function Bar() {
             className="rounded-3xl shadow-lg hover:scale-105 transition-transform"
           />
         </Link>
-        <Link
+        {/*<Link
           href="/btc"
           className="text-white font-bold text-sm sm:text-base py-2 px-4 sm:py-3 sm:px-6 rounded-lg shadow-md hover:bg-gray-700 transition duration-300 w-full md:w-auto justify-center text-center"
         >
           Bitcoin
-        </Link>
+        </Link>*/}
         <Link
           href="/eth"
           className="text-white font-bold text-sm sm:text-base py-2 px-4 sm:py-3 sm:px-6 rounded-lg shadow-md hover:bg-gray-700 transition duration-300 w-full md:w-auto justify-center text-center"

@@ -14,7 +14,7 @@ const nextConfig: NextConfig = {
     // Configura el tipo de archivo para WebAssembly
     config.module.rules.push({
       test: /\.wasm$/,
-      type: "webassembly/async",
+      type: "asset/inline", // Cambiado para manejar .wasm correctamente
     });
 
     return config;
