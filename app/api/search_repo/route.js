@@ -21,7 +21,7 @@ function rateLimit(clientId, limit = 3, windowMs = 60000) {
   return updatedRequests.length > limit;
 }
 
-export async function POST(req) {
+export async function POST(req, res) {
   try {
     const clientId = req.headers.get('x-client-id') || 'unknown';
     
@@ -87,6 +87,7 @@ export async function POST(req) {
 
     return new Response(JSON.stringify(parsedResponse), { status: 200 });
   } catch (error) {
+    res.status(500).json({ error: 'Error processing the request' });
     console.error('Error:', error.message);
     return new Response(JSON.stringify({ error: 'Error processing the request' }), { status: 500 });
   }
