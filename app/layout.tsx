@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Git Checker",
+  title: "Hashai",
   description: "AI powered GitHub repository analyzer",
 };
 
