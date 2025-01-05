@@ -48,7 +48,7 @@ const Home: React.FC = () => {
     setResult(null);
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/search_repo`, {
+      const response = await fetch(`/api/search_repo`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
