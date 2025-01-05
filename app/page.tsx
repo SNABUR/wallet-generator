@@ -188,7 +188,7 @@ const Home: React.FC = () => {
 
           {/* Programming Languages */}
           <div className="p-4">
-            <h3 className="text-xl font-semibold text-blue-600 mb-4">Programming Languages</h3>
+            <h3 className="text-xl font-semibold text-blue-600 mb-4">All Programming Languages</h3>
             <Pie
               data={languagesData}
               options={{
