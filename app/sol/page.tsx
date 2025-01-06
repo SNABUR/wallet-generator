@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const SOLPage = () => {
-  const [inputText, setInputText] = useState('vitalik');
+  const [inputText, setInputText] = useState('Anatoly');
   const [solAddress, setSolAddress] = useState('');
   const [privateKey, setPrivateKey] = useState('');
   const [showPrivateKey, setShowPrivateKey] = useState(false);
@@ -89,7 +89,7 @@ const SOLPage = () => {
             className="border border-gray-300 rounded-lg p-3 w-full focus:ring-2 h-24 focus:ring-blue-500 text-black text-sm"
             value={inputText}
             onChange={handleInputChange}
-            placeholder="vitalik"
+            placeholder="Anatoly"
           />
         </div>
 

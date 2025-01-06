@@ -101,7 +101,7 @@ export default function Bar() {
           className="text-white font-bold text-sm sm:text-base py-2 px-4 sm:py-3 sm:px-6 rounded-lg shadow-md hover:bg-gray-700 transition duration-300 w-full md:w-auto justify-center text-center"
         >
           <Image
-            src="/hashia.jpg"
+            src="/hashai.jpg"
             alt="Logo"
             width={37}
             height={37}
