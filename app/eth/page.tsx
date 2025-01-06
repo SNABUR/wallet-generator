@@ -3,7 +3,7 @@
 // pages/index.js
 "use client";
 import { useState } from 'react';
-import { keccak256 } from 'js-sha3';
+import { keccak256, Message } from 'js-sha3';
 import { ethers } from 'ethers';
 import Image from 'next/image';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
@@ -15,41 +15,70 @@ const ETHPage = () => {
   const [showPrivateKey, setShowPrivateKey] = useState(false);
 
   // Función para generar la clave y dirección cada vez que cambia el texto
+  const simulateTyping = (duration: number) => {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[{]}\\|;:\'",<.>/?`~';
+    const randomChar = () => characters.charAt(Math.floor(Math.random() * characters.length));
+  
+    let timeElapsed = 0;
+    const interval = 13.7; // Actualizar cada 100ms
+  
+    const timer = setInterval(() => {
+      // Función para generar un número aleatorio dentro de un rango
+      const getRandomLength = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
+  
+      const randomText = Array.from({ length: getRandomLength(137, 1370) }, randomChar).join('');  // Generar texto aleatorio
+      
+      // Simular valores aleatorios durante el efecto de escritura
+      setInputText(randomText);  // Actualiza el texto simulado
+  
+      // Generar la wallet real mientras se simula el tipeo
+      generateWallet(randomText);  // Usa la misma lógica para generar wallet
+  
+      timeElapsed += interval;
+  
+      if (timeElapsed >= duration) {
+        clearInterval(timer);
+        // Después de la simulación, puedes hacer algo más si es necesario
+      }
+    }, interval);
+  };
+  
+
+  const generateWallet = (text: Message) => {
+    // Generar hash del texto usando keccak256
+    const hashedOutput = keccak256(text);
+  
+    // Usar el hash como clave privada (asegúrate de que sea válida)
+    const privateKey = "0x" + hashedOutput;
+  
+    try {
+      // Crear una wallet a partir de la clave privada
+      const wallet = new ethers.Wallet(privateKey);
+  
+      // Actualizar el estado con la clave privada y la dirección
+      setPrivateKey(wallet.privateKey);
+      setEthAddress(wallet.address);
+    } catch (error) {
+      console.error("Error al generar la wallet:", error);
+      setPrivateKey("");
+      setEthAddress("");
+    }
+  };
+  
+  
+
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const text = e.target.value;
     setInputText(text);
+    
+    // Solo generar la wallet si el texto no está vacío
     if (text) {
-      const hashedOutput = keccak256(text);
-      const privateKeyHex = `0x${BigInt(`0x${hashedOutput}`).toString(16).padStart(64, '0')}`;
-      setPrivateKey(privateKeyHex);
-      const publicKey = generatePublicKey(privateKeyHex);
-      setEthAddress(publicKey);
+      generateWallet(text);  // Generar la wallet a partir del texto ingresado
     } else {
-      // Limpiar dirección y clave si el campo está vacío
-      setEthAddress('');
-      setPrivateKey('');
+      setEthAddress('');  // Limpiar la dirección si no hay texto
+      setPrivateKey('');   // Limpiar la clave privada si no hay texto
     }
   };
-
-  const generateAddress = () => {
-    // Calcular el hash Keccak-256
-    const hashedOutput = keccak256(inputText);
-
-    // Generar la clave privada a partir del hash
-    const privateKeyHex = `0x${BigInt(`0x${hashedOutput}`).toString(16).padStart(64, '0')}`;
-    setPrivateKey(privateKeyHex);
-
-    // Calcular la dirección Ethereum a partir de la clave privada
-    const publicKey = generatePublicKey(privateKeyHex);
-    setEthAddress(publicKey);
-  };
-
-  const generatePublicKey = (privateKeyHex: string) => {
-    // Usar ethers.js para generar la dirección Ethereum a partir de la clave privada
-    const wallet = new ethers.Wallet(privateKeyHex);
-    return wallet.address;
-  };
-
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text)
       .catch(err => console.error('Failed to copy text: ', err));
@@ -90,7 +119,7 @@ const ETHPage = () => {
   
         <button
           className="bg-black text-white py-2 px-4 rounded-lg mt-1 hover:bg-gray-700 transition w-64 active:scale-95 duration-200"
-          onClick={generateAddress}
+          onClick={() => simulateTyping(3000)} // Simula durante 3 segundos
         >
           GENERATE WALLET
         </button>

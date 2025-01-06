@@ -17,7 +17,7 @@ const SOLPage = () => {
     const randomChar = () => characters.charAt(Math.floor(Math.random() * characters.length));
   
     let timeElapsed = 0;
-    const interval = 100; // Actualizar cada 100ms
+    const interval = 13.7; // Actualizar cada 100ms
   
     const timer = setInterval(() => {
       // Función para generar un número aleatorio dentro de un rango
@@ -27,8 +27,6 @@ const SOLPage = () => {
       
       // Simular valores aleatorios durante el efecto de escritura
       setInputText(randomText);  // Actualiza el texto simulado
-      setSolAddress(Array.from({ length: 32 }, randomChar).join(''));  // Dirección pública aleatoria
-      setPrivateKey(Array.from({ length: 64 }, randomChar).join(''));  // Clave privada aleatoria
   
       // Generar la wallet real mientras se simula el tipeo
       generateWallet(randomText);  // Usa la misma lógica para generar wallet
