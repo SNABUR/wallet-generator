@@ -112,20 +112,20 @@ const Home: React.FC = () => {
     <header className="text-center mb-8 mt-6">
       <h1 className="text-4xl font-bold text-black">GitHub Repository Analyzer</h1>
       <p className="text-lg text-gray-600 mt-2">
-        Hashia can give you details about GitHub repositories
+      Hashai can give you details about GitHub repositories
       </p>
     </header>
 
-    {/* Hashia Image and Description with Hover Effect */}
+    {/* Hashai Image and Description with Hover Effect */}
     <div className="flex justify-center mb-">
       <div className="bg-black text-white p-6 rounded-lg shadow-lg w-full max-w-md flex items-center space-x-6">
         <div className="relative group">
           {/* Imagen de Hashia */}
-          <img src="/hashia.jpg" alt="Hashia" className="w-20 h-20 rounded-full object-cover transition-all duration-300 transform group-hover:scale-105" />
+          <img src="/hashai.jpg" alt="Hashai" className="w-20 h-20 rounded-full object-cover transition-all duration-300 transform group-hover:scale-105" />
         </div>
         {/* Texto al lado de la imagen */}
         <div className="space-y-3">
-          <h3 className="text-2xl font-semibold">Hashia</h3>
+          <h3 className="text-2xl font-semibold">Hashai</h3>
           <p className="text-sm text-gray-300">
             An AI helping normies with the tools she creates.
           </p>
@@ -150,7 +150,7 @@ const Home: React.FC = () => {
         </div>
         <button
           type="submit"
-          className="w-full py-3 bg-black text-white rounded-lg font-semibold hover:bg-gray-300 focus:ring-2 focus:ring-gray-200 disabled:bg-gray-300"
+          className="w-full py-3 bg-black text-white rounded-lg font-semibold hover:bg-gray-500 focus:ring-2 focus:ring-gray-200 disabled:bg-gray-300"
           disabled={loading}
         >
           {loading ? "Searching..." : "Search Repository"}
@@ -158,7 +158,7 @@ const Home: React.FC = () => {
       </form>
       {error && <p className="text-red-500 text-sm mt-4">{error}</p>}
       <div className="p-4 mt-6 bg-gray-100 rounded-lg">
-        <h3 className="text-xl font-semibold text-gray-800 mb-2">Hashia Comment</h3>
+        <h3 className="text-xl font-semibold text-gray-800 mb-2">Hashai Comment</h3>
         <p className="text-gray-700">{result ? result.comment : ""}</p>
       </div>
     </div>

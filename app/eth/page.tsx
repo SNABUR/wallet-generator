@@ -70,7 +70,7 @@ const ETHPage = () => {
         <div className="flex flex-col items-center mb-6">
           <Image className='mb-3' src="/ethereum.svg" alt="Ethereum Logo" width={64} height={64} />
           <h1 className="text-sm font-semibold text-black text-center mb-6 leading-relaxed md:text-base">
-        <span className="text-blue-700 font-bold">Hashia</span>
+        <span className="text-blue-700 font-bold">Hashai</span>
         <span className="mx-1">can give you</span>
         <span className="text-blue-700 font-bold">wallets</span>
         <span className="mx-1">from text</span>
