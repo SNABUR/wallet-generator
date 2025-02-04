@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 // Cargar las wallets desde el archivo JSON
-import walletsData from "../../../public/solwallets.json";
+import walletsData from "../../../public/ethwallets.json";
 
 interface Wallet {
   address: string;
@@ -27,8 +27,8 @@ const WalletBackground: React.FC<WalletBackgroundProps> = ({ onWalletClick }) =>
 
   // Función para generar valores aleatorios únicos
   const getRandomValues = () => {
-    const randomX = Math.random() * 274 ; // Evitar bordes extremos (5% - 95%)
-    const randomY = Math.random() * 73 ; // Evitar bordes extremos (5% - 95%)
+    const randomX = Math.random() * 137 ; // Evitar bordes extremos (5% - 95%)
+    const randomY = Math.random() * 90 ; // Evitar bordes extremos (5% - 95%)
     const randomDelay = Math.random() * 1370 / 130; // Retraso en segundos (0-5s)
     const randomDuration = 3 + Math.random() * 13; // Duración de animación (5-8s)
 
@@ -51,7 +51,7 @@ const WalletBackground: React.FC<WalletBackgroundProps> = ({ onWalletClick }) =>
             }}
             onClick={() => onWalletClick(wallet.address)} // Llamar al manejador con la dirección de la wallet
           >
-            {wallet.address}: {wallet.balance.toLocaleString()}{" SOL"}
+            {wallet.address}: {wallet.balance.toLocaleString()}{" ETH"}
           </div>
         );
       })}

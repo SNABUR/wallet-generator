@@ -11,16 +11,19 @@ import WalletBackground from './components/background'; // Asegúrate de importa
 const SOLPage = () => {
   const [inputText, setInputText] = useState('Anatoly');
   const [solAddress, setSolAddress] = useState('');
-  const [solAddresspredict, setSolAddresspredict] = useState('');
+  const [solAddresspredict, setSolAddresspredict] = useState('CzEuMZSS7eVgRVsAHtJWYU4R3TQ9Ge68ibYYfs3pNuEV');
   const [privateKey, setPrivateKey] = useState('');
   const [showPrivateKey, setShowPrivateKey] = useState(false);
   const [isPredicting, setIsPredicting] = useState(false);
-  const [mode, setMode] = useState<'generate' | 'predict'>('generate');
+  const [mode, setMode] = useState<'predict' | 'generate'>('predict');
   const [error, setError] = useState<string | null>(null);
   const [seedtext, setSeedtext] = useState('');
   const [privatekeyGuess, setPrivatekeyGuess] = useState('');
   const isPredictingRef = useRef(isPredicting); // Coloca el hook dentro del componente
 
+  const handleWalletClick = (address: string) => {
+    setSolAddresspredict(address);
+  }
   isPredictingRef.current = isPredicting;
 
   const predictWallet = (duration: number) => {
@@ -160,7 +163,7 @@ const SOLPage = () => {
   return (
 <div className={`min-h-screen flex items-center font-hacker justify-center ${mode === 'predict' ? 'bg-gray-900 text-white' : 'bg-gray-100 text-black'}`}>
 <div className="absolute w-full h-full z-0">
-    <WalletBackground />
+      <WalletBackground onWalletClick={handleWalletClick} />
   </div>
       <div
         className={`flex flex-col shadow-lg rounded-lg p-7 w-full max-w-md items-center relative ${mode === 'predict' ? 'bg-gray-800' : 'bg-white'}`}
@@ -288,19 +291,21 @@ const SOLPage = () => {
             </div>
   
             <button
-              className="bg-black text-white py-2 px-4 rounded-lg mt-1 hover:bg-gray-700 transition w-64 active:scale-95 duration-200"
-              onClick={() => {
-                if (isPredicting) {
-                  handleStopPrediction();
-                } else {
-                  setIsPredicting(true); // Iniciar la predicción
-                  guessWallet(); // Comenzar el proceso de adivinanza
-                }
-              }}
-            >
-              {isPredicting ? 'STOP' : 'PREDICT WALLET'}
+                className="bg-gradient-to-r from-purple-700 via-pink-300 to-red-300 text-black py-2 px-4 rounded-2xl mt-2 
+                          shadow-lg hover:from-purple-300 hover:via-pink-100 hover:to-red-300 
+                          active:scale-90 transition-transform duration-300 w-64 font-bold text-lg"
+                onClick={() => {
+                  if (isPredicting) {
+                    handleStopPrediction();
+                  } else {
+                    setIsPredicting(true); // Iniciar la predicción
+                    guessWallet(); // Comenzar el proceso de adivinanza
+                  }
+                }}
+              >
+              {isPredicting ? "570P" : "H4CK W41137"}
             </button>
-  
+
             <div className="w-full mt-6">
               <div className="flex items-center justify-start mb-2">
                 <label className={`text-sm font-medium ${mode === 'predict' ? 'text-gray-200' : 'text-gray-700'}`}>Seed Text:</label>
