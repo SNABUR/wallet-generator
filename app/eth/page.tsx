@@ -167,7 +167,7 @@ const ETHPage = () => {
       <div className={`flex flex-col shadow-lg rounded-lg p-7 w-full max-w-md items-center relative ${mode === 'predict' ? 'bg-gray-800' : 'bg-white'}`}
       >
         <div className="flex flex-col items-center mb-3">
-          <Image className='mb-3' src="/ethereum.svg" alt="Ethereum Logo" width={64} height={64} />
+          <Image className='mb-3' src="./ethereum.svg" alt="Ethereum Logo" width={64} height={64} />
           <h1 className="text-sm font-semibold text-center mb-3 leading-relaxed md:text-base">
             <span className={`font-bold ${mode === 'predict' ? 'text-blue-400' : 'text-blue-700'}`}>wallets</span>
             <span className="mx-1">from text</span>
@@ -217,7 +217,7 @@ const ETHPage = () => {
               className="bg-gray-200 py-1 px-2 rounded-lg hover:bg-gray-300 transition duration-200 active:scale-95"
               onClick={() => copyToClipboard(ETHAddress)}
             >
-              <Image src="/copy.svg" alt="Copy" width={16} height={16} />
+              <Image src="./copy.svg" alt="Copy" width={16} height={16} />
             </button>
           </div>
   
@@ -234,7 +234,7 @@ const ETHPage = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <Image src="/etherscan_logo.svg" alt="Etherscan" width={26} height={26} />
+              <Image src="./etherscan_logo.svg" alt="Etherscan" width={26} height={26} />
             </a>
           </div>
         </div>
@@ -246,7 +246,7 @@ const ETHPage = () => {
               className="bg-gray-200 py-1 px-2 rounded-lg hover:bg-gray-300 transition duration-200 active:scale-95"
               onClick={() => copyToClipboard(privateKey)}
             >
-              <Image src="/copy.svg" alt="Copy" width={16} height={16} />
+              <Image src="./copy.svg" alt="Copy" width={16} height={16} />
             </button>
           </div>
   
@@ -306,7 +306,7 @@ const ETHPage = () => {
               className="bg-gray-200 py-1 px-2 rounded-lg hover:bg-gray-300 transition duration-200 active:scale-95"
               onClick={() => copyToClipboard(seedtext)}
             >
-              <Image src="/copy.svg" alt="Copy" width={16} height={16} />
+              <Image src="./copy.svg" alt="Copy" width={16} height={16} />
             </button>
           </div>
 
@@ -326,7 +326,7 @@ const ETHPage = () => {
               className="bg-gray-200 py-1 px-2 rounded-lg hover:bg-gray-300 transition duration-200 active:scale-95"
               onClick={() => copyToClipboard(privatekeyGuess)}
             >
-              <Image src="/copy.svg" alt="Copy" width={16} height={16} />
+              <Image src="./copy.svg" alt="Copy" width={16} height={16} />
             </button>
           </div>
 
@@ -375,7 +375,7 @@ const ETHPage = () => {
               className="p-2 rounded-lg transition duration-200 active:scale-90 focus:outline-none"
               aria-label="Copy to clipboard"
             >
-              <Image src="/copy.svg" alt="Copy" width={12} height={12} />
+              <Image src="./copy.svg" alt="Copy" width={12} height={12} />
             </button>
           </div>
         </div>

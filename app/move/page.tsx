@@ -210,7 +210,7 @@ const MovePage = () => {
               className="bg-gray-200 py-1 px-2 rounded-lg hover:bg-gray-300 transition duration-200 active:scale-95"
               onClick={() => copyToClipboard(moveAddress)}
             >
-              <Image src="/copy.svg" alt="Copy" width={16} height={16} />
+              <Image src="./copy.svg" alt="Copy" width={16} height={16} />
             </button>
           </div>
 
@@ -227,7 +227,7 @@ const MovePage = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <Image src="/globe.svg" alt="Aptos Explorer" width={26} height={26} />
+              <Image src="./globe.svg" alt="Aptos Explorer" width={26} height={26} />
             </a>
           </div>
         </div>
@@ -239,7 +239,7 @@ const MovePage = () => {
               className="bg-gray-200 py-1 px-2 rounded-lg hover:bg-gray-300 transition duration-200 active:scale-95"
               onClick={() => copyToClipboard(privateKey)}
             >
-              <Image src="/copy.svg" alt="Copy" width={16} height={16} />
+              <Image src="./copy.svg" alt="Copy" width={16} height={16} />
             </button>
           </div>
 
@@ -299,7 +299,7 @@ const MovePage = () => {
               className="bg-gray-200 py-1 px-2 rounded-lg hover:bg-gray-300 transition duration-200 active:scale-95"
               onClick={() => copyToClipboard(seedtext)}
             >
-              <Image src="/copy.svg" alt="Copy" width={16} height={16} />
+              <Image src="./copy.svg" alt="Copy" width={16} height={16} />
             </button>
           </div>
 
@@ -319,7 +319,7 @@ const MovePage = () => {
               className="bg-gray-200 py-1 px-2 rounded-lg hover:bg-gray-300 transition duration-200 active:scale-95"
               onClick={() => copyToClipboard(privatekeyGuess)}
             >
-              <Image src="/copy.svg" alt="Copy" width={16} height={16} />
+              <Image src="./copy.svg" alt="Copy" width={16} height={16} />
             </button>
           </div>
 
@@ -354,7 +354,7 @@ const MovePage = () => {
               className="p-2 rounded-lg transition duration-200 active:scale-90 focus:outline-none"
               aria-label="Copy to clipboard"
             >
-              <Image src="/copy.svg" alt="Copy" width={12} height={12} />
+              <Image src="./copy.svg" alt="Copy" width={12} height={12} />
             </button>
           </div>
         </div>

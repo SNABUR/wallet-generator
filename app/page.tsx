@@ -294,7 +294,7 @@ const BTCPage = () => {
               className="bg-gray-200 py-1 px-2 rounded-lg hover:bg-gray-300 transition duration-200 active:scale-95"
               onClick={() => copyToClipboard(BTCAddress)}
             >
-              <Image src="/copy.svg" alt="Copy" width={16} height={16} />
+              <Image src="./copy.svg" alt="Copy" width={16} height={16} />
             </button>
           </div>
 
@@ -310,7 +310,7 @@ const BTCPage = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <Image src="/blockchain.svg" alt="Blockchain" width={26} height={26} />
+              <Image src="./blockchain.svg" alt="Blockchain" width={26} height={26} />
             </a>
 
           </div>
@@ -385,7 +385,7 @@ const BTCPage = () => {
               className="bg-gray-200 py-1 px-2 rounded-lg hover:bg-gray-300 transition duration-200 active:scale-95"
               onClick={() => copyToClipboard(seedtext)}
             >
-              <Image src="/copy.svg" alt="Copy" width={16} height={16} />
+              <Image src="./copy.svg" alt="Copy" width={16} height={16} />
             </button>
           </div>
 
@@ -405,7 +405,7 @@ const BTCPage = () => {
               className="bg-gray-200 py-1 px-2 rounded-lg hover:bg-gray-300 transition duration-200 active:scale-95"
               onClick={() => copyToClipboard(privatekeyGuess)}
             >
-              <Image src="/copy.svg" alt="Copy" width={16} height={16} />
+              <Image src="./copy.svg" alt="Copy" width={16} height={16} />
             </button>
           </div>
 
@@ -455,7 +455,7 @@ const BTCPage = () => {
               className="p-2 rounded-lg transition duration-200 active:scale-90 focus:outline-none"
               aria-label="Copy to clipboard"
             >
-              <Image src="/copy.svg" alt="Copy" width={12} height={12} />
+              <Image src="./copy.svg" alt="Copy" width={12} height={12} />
             </button>
           </div>
         </div>

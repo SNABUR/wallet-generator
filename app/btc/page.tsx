@@ -294,7 +294,7 @@ const BTCPage = () => {
               className="bg-gray-200 py-1 px-2 rounded-lg hover:bg-gray-300 transition duration-200 active:scale-95"
               onClick={() => copyToClipboard(BTCAddress)}
             >
-              <Image src="/copy.svg" alt="Copy" width={16} height={16} />
+              <Image src="./copy.svg" alt="Copy" width={16} height={16} />
             </button>
           </div>
 
