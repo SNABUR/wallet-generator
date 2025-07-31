@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  output: 'export', // 👈 Esto es lo que necesitas agregar
   images: {
     unoptimized: true, // Deshabilita la optimización de imágenes
   },
