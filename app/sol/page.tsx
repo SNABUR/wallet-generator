@@ -15,7 +15,7 @@ const SOLPage = () => {
   const [privateKey, setPrivateKey] = useState('');
   const [showPrivateKey, setShowPrivateKey] = useState(false);
   const [isPredicting, setIsPredicting] = useState(false);
-  const [mode, setMode] = useState<'predict' | 'generate'>('predict');
+  const [mode, setMode] = useState<'predict' | 'generate'>('generate');
   const [error, setError] = useState<string | null>(null);
   const [seedtext, setSeedtext] = useState('');
   const [privatekeyGuess, setPrivatekeyGuess] = useState('');
@@ -165,14 +165,11 @@ const SOLPage = () => {
 <div className="absolute w-full h-full z-0">
       <WalletBackground onWalletClick={handleWalletClick} />
   </div>
-      <div
-        className={`flex flex-col shadow-lg rounded-lg p-7 w-full max-w-md items-center relative ${mode === 'predict' ? 'bg-gray-800' : 'bg-white'}`}
+      <div className={`flex flex-col shadow-lg rounded-lg p-7 w-full max-w-md items-center relative ${mode === 'predict' ? 'bg-gray-800' : 'bg-white'}`}
       >
         <div className="flex flex-col items-center mb-3">
           <Image className='mb-3' src="/solana.svg" alt="Solana Logo" width={64} height={64} />
           <h1 className="text-sm font-semibold text-center mb-3 leading-relaxed md:text-base">
-            <span className={`font-bold ${mode === 'predict' ? 'text-blue-400' : 'text-blue-700'}`}>Hashai</span>
-            <span className="mx-1">can give you</span>
             <span className={`font-bold ${mode === 'predict' ? 'text-blue-400' : 'text-blue-700'}`}>wallets</span>
             <span className="mx-1">from text</span>
           </h1>

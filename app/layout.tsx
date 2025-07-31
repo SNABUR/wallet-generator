@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Hashai",
-  description: "AI powered GitHub repository analyzer",
+  title: "!@#$%^",
+  description: "Random wallet generation",
 };
 
 export default function RootLayout({

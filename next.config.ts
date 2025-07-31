@@ -6,15 +6,21 @@ const nextConfig: NextConfig = {
   },
   webpack: (config) => {
     // Habilitar soporte para WebAssembly y capas
+    config.resolve.fallback = { 
+      ...config.resolve.fallback,
+      crypto: false,
+      stream: false
+    };
     config.experiments = {
       asyncWebAssembly: true,
       syncWebAssembly: true,
       layers: true,
     };
-    // Configura el tipo de archivo para WebAssembly
+    
+    // Cambiar el manejo de archivos .wasm
     config.module.rules.push({
       test: /\.wasm$/,
-      type: "asset/inline", // Cambiado para manejar .wasm correctamente
+      type: "webassembly/async",
     });
 
     return config;

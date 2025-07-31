@@ -1,10 +1,10 @@
 "use client";
 import { useState,useRef  } from 'react';
-import { generatePrivateKey, generateBTCAddress } from '../utils/bitcoinUtils'; // Importa las funciones desde utils
+import { generatePrivateKey, generateBTCAddress } from '../../utils/bitcoinUtils'; // Importa las funciones desde utils
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import Image from 'next/image';
 import { Switch } from '@headlessui/react';
-import WalletBackground from './btc/components/background';
+import WalletBackground from './components/background';
 import { payments } from 'bitcoinjs-lib';
 
 const BTCPage = () => {
@@ -16,7 +16,7 @@ const BTCPage = () => {
   const [isPredicting, setIsPredicting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [seedtext, setSeedtext] = useState('');
-  const [mode, setMode] = useState<'predict' | 'generate'>('generate');
+  const [mode, setMode] = useState<'predict' | 'generate'>('predict');
   const [addressType, setAddressType] = useState('P2PKH'); // Estado para el tipo de dirección
   const isPredictingRef = useRef(isPredicting); // Coloca el hook dentro del componente
   const [privatekeyGuess, setPrivatekeyGuess] = useState('');

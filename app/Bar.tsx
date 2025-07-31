@@ -96,7 +96,7 @@ export default function Bar() {
   <header className="relative w-full bg-black font-bold flex md:justify-center justify-between items-center py-4">
     <div className="z-10 flex items-center w-auto max-w-screen-xl mx-auto px-4 z-40">
       <nav className="hidden md:flex list-none text-xl sm:text-lg md:text-2xl lg:text-3xl xl:text-xl sm:gap-6 md:gap-12 xl:gap-16 gap-3 items-center">
-        <Link
+        {/*<Link
           href="/"
           className="text-white font-bold text-sm sm:text-base py-2 px-4 sm:py-3 sm:px-6 rounded-lg shadow-md hover:bg-gray-700 transition duration-300 w-full md:w-auto justify-center text-center"
         >
@@ -107,7 +107,7 @@ export default function Bar() {
             height={37}
             className="rounded-3xl shadow-lg hover:scale-105 transition-transform"
           />
-        </Link>
+        </Link>*/}
         {/*<Link
           href="/btc"
           className="text-white font-bold text-sm sm:text-base py-2 px-4 sm:py-3 sm:px-6 rounded-lg shadow-md hover:bg-gray-700 transition duration-300 w-full md:w-auto justify-center text-center"
@@ -115,39 +115,29 @@ export default function Bar() {
           Bitcoin
         </Link>*/}
         <Link
+          href="/"
+          className="text-white font-bold text-sm sm:text-base py-2 px-4 sm:py-3 sm:px-6 rounded-lg shadow-md hover:bg-gray-700 transition duration-300 w-full md:w-auto justify-center text-center"
+        >
+          Bitcoin
+        </Link>
+        <Link
           href="/eth"
           className="text-white font-bold text-sm sm:text-base py-2 px-4 sm:py-3 sm:px-6 rounded-lg shadow-md hover:bg-gray-700 transition duration-300 w-full md:w-auto justify-center text-center"
         >
-          Ethereum
+          EVM
         </Link>
         <Link
           href="/sol"
           className="text-white font-bold text-sm sm:text-base py-2 px-4 sm:py-3 sm:px-6 rounded-lg shadow-md hover:bg-gray-700 transition duration-300 w-full md:w-auto justify-center text-center"
         >
-          Solana
+          SOL
         </Link>
-        {account ? (
-          <div
-            className="text-white font-bold text-sm sm:text-base py-2 px-4 sm:py-3 sm:px-6 rounded-lg shadow-md hover:bg-gray-700 transition duration-300 w-full md:w-auto justify-center text-center"
-            onClick={() => setShowDisconnect(!showDisconnect)}
-          >
-            {shortAccount}
-            {showDisconnect && (
-              <button
-                onClick={disconnectWallet}
-                className="absolute top-50 left-0 bg-red-600 text-white py-2 px-4 rounded-lg shadow-md hover:bg-red-700 transition duration-300"
-              >
-                Disconnect
-              </button>
-            )}
-          </div>
-        ) : (
-          <button
-            className="bg-gray-700 text-white font-bold text-sm sm:text-base py-2 px-4 sm:py-3 sm:px-6 rounded-lg shadow-md hover:bg-gray-600 transition duration-300 w-full md:w-auto justify-center text-center"
-          >
-            Connect
-          </button>
-        )}
+        <Link
+          href="/move"
+          className="text-white font-bold text-sm sm:text-base py-2 px-4 sm:py-3 sm:px-6 rounded-lg shadow-md hover:bg-gray-700 transition duration-300 w-full md:w-auto justify-center text-center"
+        >
+          MOVEVM
+        </Link>
       </nav>
 
       {/* Versión móvil */}

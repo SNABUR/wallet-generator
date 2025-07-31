@@ -1,140 +1,133 @@
 
-
 // pages/index.js
 "use client";
 import { useState, useRef } from 'react';
-import { ethers } from 'ethers';
+import { Account, Ed25519PrivateKey } from '@aptos-labs/ts-sdk';
 import Image from 'next/image';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { Switch } from '@headlessui/react';
 import WalletBackground from './components/background';
+import { sha3_256 } from 'js-sha3';
 
-const ETHPage = () => {
-  const [inputText, setInputText] = useState('vitalik');
-  const [ETHAddress, setETHAddress] = useState('0x89d768F75bd1Ae465876046d5e5466D0b1FdbD03');
-  const [ETHAddresspredict, setETHAddresspredict] = useState('0x89d768F75bd1Ae465876046d5e5466D0b1FdbD03');
-  const [privateKey, setPrivateKey] = useState('0xaf2caa1c2ca1d027f1ac823b529d0a67cd144264b2789fa2ea4d63a67c7103cc');
+// Helper function to convert Uint8Array to Hex string
+const toHexString = (byteArray: Uint8Array) => {
+  return '0x' + Array.from(byteArray, byte => {
+    return ('0' + (byte & 0xFF).toString(16)).slice(-2);
+  }).join('');
+};
+
+const MovePage = () => {
+  const [inputText, setInputText] = useState('move');
+  const [moveAddress, setMoveAddress] = useState('0x5f7e...3e2a');
+  const [moveAddressPredict, setMoveAddressPredict] = useState('0x5f7e...3e2a');
+  const [privateKey, setPrivateKey] = useState('0x12...ab');
   const [showPrivateKey, setShowPrivateKey] = useState(false);
   const [isPredicting, setIsPredicting] = useState(false);
   const [mode, setMode] = useState<'predict' | 'generate'>('generate');
   const [error, setError] = useState<string | null>(null);
   const [seedtext, setSeedtext] = useState('');
   const [privatekeyGuess, setPrivatekeyGuess] = useState('');
-  const isPredictingRef = useRef(isPredicting); // Coloca el hook dentro del componente
+  const isPredictingRef = useRef(isPredicting);
 
   const handleWalletClick = (address: string) => {
-    setETHAddresspredict(address);
+    setMoveAddressPredict(address);
   }
   isPredictingRef.current = isPredicting;
 
   const predictWallet = (duration: number) => {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[{]}\\|;:\'",<.>/?`~';
     const randomChar = () => characters.charAt(Math.floor(Math.random() * characters.length));
-  
+
     let timeElapsed = 0;
     const interval = 13.7;
-  
+
     const timer = setInterval(() => {
       const getRandomLength = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
-  
-      const randomText = Array.from({ length: getRandomLength(1, 1370) }, randomChar).join('');  
-      setInputText(randomText);  
-      generateWallet(randomText);  
-  
+
+      const randomText = Array.from({ length: getRandomLength(1, 1370) }, randomChar).join('');
+      setInputText(randomText);
+      generateWallet(randomText);
+
       timeElapsed += interval;
-  
+
       if (timeElapsed >= duration) {
         clearInterval(timer);
-        // Después de la simulación, puedes hacer algo más si es necesario
       }
     }, interval);
   };
 
   const guessWallet = async () => {
-    const characters =
-      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[{]}\\|;:\'",<.>/?`~';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[{]}\\|;:\'",<.>/?`~';
 
     const randomChar = () =>
       characters.charAt(Math.floor(Math.random() * characters.length));
     const getRandomLength = (min: number, max: number) =>
       Math.floor(Math.random() * (max - min + 1)) + min;
-  
-    let found = false; // Bandera para saber si ya coincidimos
-    setIsPredicting(true); // Iniciar el proceso de predicción
+
+    let found = false;
+    setIsPredicting(true);
     isPredictingRef.current = true;
 
     try {
-      while (!found && isPredictingRef.current) {  
+      while (!found && isPredictingRef.current) {
         const randomText = Array.from(
           { length: getRandomLength(1, 1370) },
           randomChar
         ).join('');
-  
-        // Generar dirección basada en randomText
-        const solAddressGuessed = generateWalletGuess(randomText);
-        setSeedtext(randomText); // Actualizar el texto generado
-  
-        // Comparar con la predicción
-        if (solAddressGuessed === ETHAddresspredict) {
-          found = true; // Coincidencia encontrada
+
+        const moveAddressGuessed = generateWalletGuess(randomText);
+        setSeedtext(randomText);
+
+        if (moveAddressGuessed === moveAddressPredict) {
+          found = true;
         }
-  
-        // Esperar brevemente para no bloquear la interfaz
+
         await new Promise((resolve) => setTimeout(resolve, 10));
       }
     } finally {
-      setIsPredicting(false); // Asegurarse de que el estado se actualiza una vez el ciclo termine
+      setIsPredicting(false);
       isPredictingRef.current = false;
-
     }
   };
-  
+
 
   const handleStopPrediction = () => {
-    // Detener la predicción
-    setIsPredicting(false); // Establecer isPredicting a false para detener el ciclo
+    setIsPredicting(false);
   };
 
 
   const generateWalletGuess = (text: string) => {
-    // Hash del texto usando keccak256
-    const hashedOutput = ethers.keccak256(ethers.toUtf8Bytes(text));
-  
-    // Usar el hash como clave privada
-    const privateKey = hashedOutput.slice(2); // Eliminar el prefijo "0x"
-  
-    // Crear una wallet a partir de la clave privada
-    const wallet = new ethers.Wallet(privateKey);
-  
-    // Actualizar el estado con la clave privada
-    setPrivatekeyGuess(wallet.privateKey); 
-  
-    return wallet.address; 
+    const hash = sha3_256.create();
+    hash.update(text);
+    const privateKeyBytes = new Uint8Array(hash.arrayBuffer());
+    const privateKey = new Ed25519PrivateKey(privateKeyBytes);
+    const account = Account.fromPrivateKey({privateKey});
+    setPrivatekeyGuess(toHexString(privateKey.toUint8Array()));
+    return account.accountAddress.toString();
   };
-  
+
 
   const generateWallet = (text: string) => {
-    const hashedOutput = ethers.keccak256(ethers.toUtf8Bytes(text));
-  
-    const privateKey = hashedOutput.slice(2); 
-  
-    const wallet = new ethers.Wallet(privateKey);
-  
-    setPrivateKey(wallet.privateKey); 
-    setETHAddress(wallet.address);   
+    const hash = sha3_256.create();
+    hash.update(text);
+    const privateKeyBytes = new Uint8Array(hash.arrayBuffer());
+    const privateKey = new Ed25519PrivateKey(privateKeyBytes);
+    const account = Account.fromPrivateKey({privateKey});
+    setPrivateKey(toHexString(privateKey.toUint8Array()));
+    setMoveAddress(account.accountAddress.toString());
   };
-  
-  
+
+
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const text = e.target.value;
     setInputText(text);
-    
+
     if (text) {
-      generateWallet(text);  
+      generateWallet(text);
     } else {
-      setETHAddress('');  
-      setPrivateKey('');  
+      setMoveAddress('');
+      setPrivateKey('');
     }
   };
   const copyToClipboard = (text: string) => {
@@ -144,18 +137,18 @@ const ETHPage = () => {
 
   const handleAddressChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const address = event.target.value;
-    setETHAddresspredict(address);
-    setError(null); 
-  
+    setMoveAddressPredict(address);
+    setError(null);
+
     if (address.trim() === "") {
-      setError(""); 
+      setError("");
       return;
     }
-  
-    if (ethers.isAddress(address)) {
-      setETHAddresspredict(address);
+
+    if (address.length >= 66) {
+        setMoveAddressPredict(address);
     } else {
-      setError("This is not a valid ETH Address.");
+      setError("This is not a valid Move Address.");
     }
   };
 
@@ -164,11 +157,11 @@ const ETHPage = () => {
 <div className="absolute w-full h-full z-0">
       <WalletBackground onWalletClick={handleWalletClick} />
   </div>
-      <div className={`flex flex-col shadow-lg rounded-lg p-7 w-full max-w-md items-center relative ${mode === 'predict' ? 'bg-gray-800' : 'bg-white'}`}
-      >
+      <div className={`flex flex-col shadow-lg rounded-lg p-7 w-full max-w-md items-center relative ${mode === 'predict' ? 'bg-gray-800' : 'bg-white'}`}>
         <div className="flex flex-col items-center mb-3">
-          <Image className='mb-3' src="/ethereum.svg" alt="Ethereum Logo" width={64} height={64} />
+          <Image className='mb-3' src="/move.png" alt="Blockchain Logo" width={64} height={64} />
           <h1 className="text-sm font-semibold text-center mb-3 leading-relaxed md:text-base">
+            <span className="mx-1">create</span>
             <span className={`font-bold ${mode === 'predict' ? 'text-blue-400' : 'text-blue-700'}`}>wallets</span>
             <span className="mx-1">from text</span>
           </h1>
@@ -188,7 +181,7 @@ const ETHPage = () => {
             </Switch>
           </div>
           {mode === 'generate' ? (
-            
+
       <>
         <div className="w-full mb-4">
         <label className={`block text-sm font-medium ${mode === 'generate' ? 'text-gray-700' : 'text-gray-200'} mb-2`}>
@@ -198,10 +191,10 @@ const ETHPage = () => {
                 className={`border border-gray-300 rounded-lg p-3 w-full focus:ring-2 h-24 focus:ring-blue-500 ${mode === 'generate' ? ' text-black' : 'text-white bg-gray-700'}`}
                 value={inputText}
             onChange={handleInputChange}
-            placeholder="vitalik"
+            placeholder="move"
           />
         </div>
-  
+
         <button
           className="bg-black text-white py-2 px-4 rounded-lg mt-1 hover:bg-gray-700 transition w-64 active:scale-95 duration-200"
           onClick={() => predictWallet(3710)}
@@ -209,36 +202,36 @@ const ETHPage = () => {
           {isPredicting ? 'GENERATING...' : 'GENERATE WALLET'}
 
         </button>
-  
+
         <div className="w-full mt-6">
           <div className="flex items-center justify-start mb-2">
-            <label className="text-sm font-medium text-gray-700">ETH Address:</label>
+            <label className="text-sm font-medium text-gray-700">Move Address:</label>
             <button
               className="bg-gray-200 py-1 px-2 rounded-lg hover:bg-gray-300 transition duration-200 active:scale-95"
-              onClick={() => copyToClipboard(ETHAddress)}
+              onClick={() => copyToClipboard(moveAddress)}
             >
               <Image src="/copy.svg" alt="Copy" width={16} height={16} />
             </button>
           </div>
-  
+
           <div className="flex items-center gap-2 mb-4">
             <textarea
               className="border border-gray-300 rounded-lg p-3 w-full bg-gray-100 text-black"
               readOnly
-              value={ETHAddress}
+              value={moveAddress}
             />
 
             <a
               className="p-2 rounded-lg hover:bg-gray-300 transition duration-200 active:scale-95"
-              href={`https://etherscan.io/address/${ETHAddress}`}
+              href={`https://explorer.aptoslabs.com/account/${moveAddress}`}
               target="_blank"
               rel="noopener noreferrer"
             >
-              <Image src="/etherscan_logo.svg" alt="Etherscan" width={26} height={26} />
+              <Image src="/globe.svg" alt="Aptos Explorer" width={26} height={26} />
             </a>
           </div>
         </div>
-  
+
         <div className="w-full mt-6">
           <div className="flex items-center justify-start mb-2">
             <label className="text-sm font-medium text-gray-700">Private Key:</label>
@@ -249,7 +242,7 @@ const ETHPage = () => {
               <Image src="/copy.svg" alt="Copy" width={16} height={16} />
             </button>
           </div>
-  
+
           <div className="flex items-center gap-2 mb-4">
             <textarea
               className="border border-gray-300 rounded-lg p-3 w-full bg-gray-100 text-black"
@@ -269,12 +262,12 @@ const ETHPage = () => {
       <>
         {/* Predict Mode */}
         <div className="w-full mb-3">
-          <label className={`block text-sm font-medium ${mode === 'predict' ? 'text-gray-700' : 'text-gray-200'} mb-2`}>ETH Address:</label>
+          <label className={`block text-sm font-medium ${mode === 'predict' ? 'text-gray-700' : 'text-gray-200'} mb-2`}>Move Address:</label>
           <textarea
             className={`border border-gray-300 rounded-lg p-3 w-full focus:ring-2 h-24 focus:ring-blue-500 ${mode === 'predict' ? 'bg-gray-700 text-white' : 'text-black'}`}
-            value={ETHAddresspredict}
+            value={moveAddressPredict}
             onChange={handleAddressChange}
-            placeholder="Enter SOL Address"
+            placeholder="Enter Move Address"
             disabled={isPredicting}
           />
         </div>
@@ -284,15 +277,15 @@ const ETHPage = () => {
         </div>
 
         <button
-            className="bg-gradient-to-r from-purple-700 via-pink-300 to-red-300 text-black py-2 px-4 rounded-2xl mt-2 
-                      shadow-lg hover:from-purple-300 hover:via-pink-100 hover:to-red-300 
+            className="bg-gradient-to-r from-purple-700 via-pink-300 to-red-300 text-black py-2 px-4 rounded-2xl mt-2
+                      shadow-lg hover:from-purple-300 hover:via-pink-100 hover:to-red-300
                       active:scale-90 transition-transform duration-300 w-64 font-bold text-lg"
             onClick={() => {
               if (isPredicting) {
                 handleStopPrediction();
               } else {
-                setIsPredicting(true); // Iniciar la predicción
-                guessWallet(); // Comenzar el proceso de adivinanza
+                setIsPredicting(true);
+                guessWallet();
               }
             }}
           >
@@ -352,20 +345,6 @@ const ETHPage = () => {
       </>
         )}
         <div className="flex flex-col items-center mt-3 text-center">
-          {/*<p className="text-sm text-gray-600 mb-2">
-          made with ❤️ by GG
-
-          </p>
-          <p className="text-2sm text-gray-600 font-bold mb-2">
-            <a 
-              href="https://goosey.fun" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="text-blue-500 font-bold hover:underline"
-            >
-              goosey.fun
-            </a>
-          </p>*/}
           <div
             className="flex items-center space-x-1 rounded-lg p-1 cursor-pointer transition duration-200"
             onClick={() => copyToClipboard("0x3d90Eb79C1e753Ca51D1447791C07e7CcC219e5C")}
@@ -384,4 +363,4 @@ const ETHPage = () => {
   );
 };
 
-export default ETHPage;
+export default MovePage;
